@@ -25,7 +25,7 @@ fastify.get(
       },
     },
   },
-  async (request, reply) => {
+  (request, reply) => {
     return reply.code(200).send({
       success: true,
       status: "ok",

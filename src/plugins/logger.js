@@ -1,12 +1,12 @@
 import { config } from "../config/config.js";
 
-export async function loggerPlugin(fastify, options) {
+export function loggerPlugin(fastify) {
   // Log request/response details
-  fastify.addHook("onRequest", async (request, reply) => {
+  fastify.addHook("onRequest", (request, _reply) => {
     request.startTime = Date.now();
   });
 
-  fastify.addHook("onResponse", async (request, reply) => {
+  fastify.addHook("onResponse", (request, reply) => {
     const duration = Date.now() - request.startTime;
     const method = request.method;
     const url = request.url;
@@ -16,8 +16,8 @@ export async function loggerPlugin(fastify, options) {
 
     console.log(
       `${statusColor}[${statusCode}]${reset} ${method.padEnd(
-        6
-      )} ${url} ${duration}ms`
+        6,
+      )} ${url} ${duration}ms`,
     );
   });
 
