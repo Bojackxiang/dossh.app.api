@@ -6,7 +6,13 @@ COPY package*.json ./
 
 ARG HUSKY=0 // Disable husky in Docker builds by default
 ENV HUSKY=$HUSKY
-RUN npm ci --only=production
+RUN npm ci --omit=dev
+
+# Copy prisma schema first
+COPY prisma ./prisma
+
+# Generate Prisma Client
+RUN npx prisma generate
 
 COPY . .
 

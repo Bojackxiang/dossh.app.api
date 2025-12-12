@@ -21,6 +21,7 @@ export default [
     },
     rules: {
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-undef": "error", // 🔥 检测未定义的变量（如缺失的导入）
       "no-console": "off",
       "no-debugger": "warn",
       "no-var": "error",
@@ -47,8 +48,7 @@ export default [
       "no-new-func": "error",
 
       // async/await
-      "require-await": "warn",
-      "no-return-await": "error",
+      // "require-await": "warn",
 
       // 导入规则
       "no-duplicate-imports": "error",

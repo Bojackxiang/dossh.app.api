@@ -4,10 +4,18 @@ import sensible from "@fastify/sensible";
 import swagger from "@fastify/swagger";
 import swaggerUI from "@fastify/swagger-ui";
 import { loggerPlugin } from "./logger.js";
+import prismaPlugin from "./prisma.js";
+import repositoriesPlugin from "./repositories.js";
 
 export async function registerPlugins(fastify) {
   // Logger plugin
   await fastify.register(loggerPlugin);
+
+  // Prisma plugin - database connection
+  await fastify.register(prismaPlugin);
+
+  // Repositories plugin - must be after prisma
+  await fastify.register(repositoriesPlugin);
 
   // CORS support - must be registered first
   await fastify.register(cors, {
