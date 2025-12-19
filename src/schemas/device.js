@@ -7,7 +7,6 @@ import { SuccessResponse, DateTimeString, OptionalString, OptionalBoolean } from
 
 // Request body for creating a device
 export const CreateDeviceBody = Type.Object({
-  id: Type.String(),
   customerId: OptionalString,
   deviceName: OptionalString,
   deviceType: OptionalString,
