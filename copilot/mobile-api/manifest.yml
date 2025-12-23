@@ -39,6 +39,7 @@ variables: # Pass environment variables as key value pairs.
 
 secrets: # Pass secrets from AWS Systems Manager (SSM) Parameter Store.
   DATABASE_URL: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/DATABASE_URL
+  JWT_SECRET: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/JWT_SECRET
 
 # You can override any of the values defined above by environment.
 environments:

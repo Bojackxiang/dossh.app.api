@@ -103,17 +103,26 @@ export default async function registrationRoutes(fastify) {
       summary: "Verify registration OTP",
       body: VerifyOtpBody,
       response: {
-        201: SuccessResponse(),
+        201: SuccessResponse(
+          Type.Object({
+            customerId: Type.String(),
+            accessToken: Type.String(),
+            expiresIn: Type.Number(),
+          })
+        ),
         400: Error400Schema,
         500: Error500Schema,
       },
     },
     async (request, reply) => {
       try {
-        await verification(request, fastify);
+        const payload = await verification(request, fastify);
 
         return reply.code(201).send({
           success: true,
+          data: {
+            ...payload,
+          },
         });
       } catch (error) {
         if (error.name === "VerificationFlowError") {

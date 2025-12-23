@@ -4,6 +4,7 @@ import { hash } from "../utils/crypto.js";
 import { deviceValidation } from "../utils/device-validation.js";
 import { phoneValidation } from "../utils/phone-validation.js";
 import { emailValidation } from "../utils/email-validation.js";
+import { generateAccessToken } from "../lib/jwt.js";
 
 export const verification = async (request, fastify) => {
   try {
@@ -35,6 +36,8 @@ export const verification = async (request, fastify) => {
       email,
       deviceId,
     });
+
+    console.log({ tokenRecord });
 
     if (!tokenRecord) {
       throw new VerificationFlowError("Verification token not found or expired");
@@ -122,8 +125,16 @@ export const verification = async (request, fastify) => {
       return customer;
     });
 
+    // Generate JWT token
+    const token = generateAccessToken({
+      customerId: result.id,
+      email: result.email,
+    });
+
     return {
       customerId: result.id,
+      accessToken: token,
+      expiresIn: 3600,
     };
   } catch (error) {
     throw new VerificationFlowError(`Verification failed: ${error.message}`);

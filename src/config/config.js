@@ -7,4 +7,5 @@ export const config = {
   HOST: process.env.HOST || "0.0.0.0",
   LOG_LEVEL: process.env.LOG_LEVEL || "info",
   DATABASE_URL: process.env.DATABASE_URL,
+  JWT_SECRET: process.env.JWT_SECRET,
 };
