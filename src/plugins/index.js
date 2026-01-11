@@ -47,6 +47,16 @@ export async function registerPlugins(fastify) {
           description: "Development server",
         },
       ],
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+            description: "Enter your JWT access token",
+          },
+        },
+      },
     },
     exposeRoute: true,
   });

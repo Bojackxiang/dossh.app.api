@@ -120,7 +120,13 @@ export class RegistrationTokensRepo {
 
     const now = new Date();
 
-    return this.prisma.registration_tokens.findFirst({
+    console.log("findActiveToken ", {
+      phone,
+      email,
+      deviceId,
+    });
+
+    const matchedToken = await this.prisma.registration_tokens.findFirst({
       where: {
         status: "pending",
         verifiedAt: null,
@@ -135,6 +141,10 @@ export class RegistrationTokensRepo {
         createdAt: "desc",
       },
     });
+
+    console.log("matchedToken: ", matchedToken);
+
+    return matchedToken;
   }
 
   /**

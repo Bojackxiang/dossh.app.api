@@ -50,6 +50,7 @@ async function authPlugin(fastify) {
 
       // Verify and decode token
       const decoded = verifyAccessToken(token);
+      console.log("decoded: ", decoded);
 
       // Attach user data to request
       request.user = {

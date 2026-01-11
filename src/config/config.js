@@ -8,4 +8,5 @@ export const config = {
   LOG_LEVEL: process.env.LOG_LEVEL || "info",
   DATABASE_URL: process.env.DATABASE_URL,
   JWT_SECRET: process.env.JWT_SECRET,
+  JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
 };

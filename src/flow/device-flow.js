@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { deviceIdGenerator } from "../utils/device-id-generator.js";
 
 /**
  * Create a new device with business logic
@@ -28,7 +29,7 @@ export const createDevice = async (request, fastify) => {
 
   // Create device in database
   const device = await deviceRepo.create({
-    id,
+    id: deviceIdGenerator(),
     customerId,
     deviceName,
     deviceType,
