@@ -12,8 +12,12 @@ export const updateCustomerInfo = async (request, fastify) => {
   const { id: customerId } = request.params; // From JWT token
   const updateData = request.body;
 
-  logger.info({ updateData }, "Updated data is ");
-  logger.info({ customerId }, "Updating customer information");
+  // customer verification
+  const decode = request.user;
+  console.log("testdecode", decode, customerId);
+  if (decode.customerId !== customerId) {
+    throw new Error("Unauthorized to update this customer's information");
+  }
 
   // Validate uniqueness if username or phone is being updated
   if (updateData.username) {

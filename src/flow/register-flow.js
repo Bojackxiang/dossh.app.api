@@ -12,6 +12,7 @@ import { sendEmail } from "../lib/send-email.js";
 import { generateOTP } from "../utils/otp.js";
 import { hash } from "../utils/crypto.js";
 import { deviceValidation } from "../utils/device-validation.js";
+import { customerIdGenerator } from "../utils/customer-id-generator.js";
 
 /**
  * User registration flow
@@ -100,7 +101,7 @@ export const userRegister = async (request, fastify) => {
       // 4.4 Create customer (inactive until verification)
       return await tx.customers.create({
         data: {
-          id: randomUUID(),
+          id: customerIdGenerator(),
           firstName,
           lastName,
           phone,

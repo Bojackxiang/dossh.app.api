@@ -4,7 +4,7 @@ import { hash } from "../utils/crypto.js";
 import { deviceValidation } from "../utils/device-validation.js";
 import { phoneValidation } from "../utils/phone-validation.js";
 import { emailValidation } from "../utils/email-validation.js";
-import { generateAccessToken } from "../lib/jwt.js";
+import { generateAccessToken, generateRefreshToken } from "../lib/jwt.js";
 
 export const verification = async (request, fastify) => {
   try {
@@ -31,13 +31,19 @@ export const verification = async (request, fastify) => {
     await emailValidation(request, fastify);
 
     // find token resume
+    request.log.info(
+      {
+        searchParams: { phone, email, deviceId },
+        timestamp: new Date().toISOString(),
+      },
+      "Searching for active token"
+    );
+
     const tokenRecord = await tokenRepo.findActiveToken({
       phone,
       email,
       deviceId,
     });
-
-    console.log({ tokenRecord });
 
     if (!tokenRecord) {
       throw new VerificationFlowError("Verification token not found or expired");
@@ -131,10 +137,17 @@ export const verification = async (request, fastify) => {
       email: result.email,
     });
 
+    const refreshToken = generateRefreshToken({
+      customerId: result.id,
+      tokenId: randomUUID(), // Unique identifier for this refresh token
+    });
+
     return {
       customerId: result.id,
       accessToken: token,
+      refreshToken: refreshToken,
       expiresIn: 3600,
+      tokenType: "Bearer",
     };
   } catch (error) {
     throw new VerificationFlowError(`Verification failed: ${error.message}`);
