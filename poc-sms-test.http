@@ -1,0 +1,106 @@
+### POC SMS Lambda 集成测试
+
+# 设置基础 URL
+@baseUrl = http://localhost:3000/api/poc-sms
+
+### ========================================
+### 调试端点 - 找到正确的 Lambda 函数
+### ========================================
+
+### 1. 健康检查
+GET {{baseUrl}}/health
+
+### 2. 查看 Lambda 配置
+GET {{baseUrl}}/config
+
+### 3. 🔍 列出所有 Lambda 函数（找到正确的函数名称）
+GET {{baseUrl}}/lambda/list
+
+### 4. 🔍 搜索 SMS 相关的 Lambda 函数
+GET {{baseUrl}}/lambda/search?keyword=sms
+
+### 5. 🔍 搜索包含 "send" 的 Lambda 函数
+GET {{baseUrl}}/lambda/search?keyword=send
+
+### 6. 🔍 测试默认配置的 Lambda 是否可访问
+GET {{baseUrl}}/lambda/test
+
+### 7. 🔍 测试特定 Lambda 函数（替换为实际的函数名）
+GET {{baseUrl}}/lambda/test?functionName=YOUR_ACTUAL_FUNCTION_NAME
+
+### 8. 🔍 获取 Lambda 函数详情
+GET {{baseUrl}}/lambda/details?functionName=YOUR_ACTUAL_FUNCTION_NAME
+
+### ========================================
+### 正式测试端点
+### ========================================
+
+### 9. 同步发送短信（等待结果）
+POST {{baseUrl}}/send
+Content-Type: application/json
+
+{
+  "phoneNumber": "+60123456789",
+  "message": "Your OTP is 123456. Valid for 5 minutes."
+}
+
+### 10. 异步发送短信（不等待结果）
+POST {{baseUrl}}/send-async
+Content-Type: application/json
+
+{
+  "phoneNumber": "+60123456789",
+  "message": "Your verification code is 654321"
+}
+
+### 5. 测试验证错误 - 缺少 phoneNumber
+POST {{baseUrl}}/send
+Content-Type: application/json
+
+{
+  "message": "Test message without phone number"
+}
+
+### 6. 测试验证错误 - 缺少 message
+POST {{baseUrl}}/send
+Content-Type: application/json
+
+{
+  "phoneNumber": "+60123456789"
+}
+
+### 7. 批量测试 - 同步发送多条
+POST {{baseUrl}}/send
+Content-Type: application/json
+
+{
+  "phoneNumber": "+60111111111",
+  "message": "Test message 1"
+}
+
+###
+POST {{baseUrl}}/send
+Content-Type: application/json
+
+{
+  "phoneNumber": "+60222222222",
+  "message": "Test message 2"
+}
+
+### 8. 批量测试 - 异步发送多条
+POST {{baseUrl}}/send-async
+Content-Type: application/json
+
+{
+  "phoneNumber": "+60333333333",
+  "message": "Async test message 1"
+}
+
+###
+POST {{baseUrl}}/send-async
+Content-Type: application/json
+
+{
+  "phoneNumber": "+60444444444",
+  "message": "Async test message 2"
+}
