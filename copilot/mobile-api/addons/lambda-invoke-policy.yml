@@ -1,0 +1,36 @@
+Parameters:
+  App:
+    Type: String
+    Description: Your application's name.
+  Env:
+    Type: String
+    Description: The environment name your service, job, or workflow is being deployed to.
+  Name:
+    Type: String
+    Description: Your workload's name.
+
+Resources:
+  LambdaInvokePolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Grants permission to invoke the SMS Lambda function
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+              - lambda:InvokeAsync
+            Resource:
+              # 替换为您的 Lambda ARN
+              # 格式: arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME
+              - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:tool-sms-sendSmsFunction-*"
+              # 或者指定具体的 Lambda 函数
+              # - "arn:aws:lambda:ap-southeast-1:123456789012:function:tool-sms-sendSmsFunction-qELG61cAgDO7"
+
+Outputs:
+  LambdaInvokePolicyArn:
+    Description: ARN of the Lambda invoke policy
+    Value: !Ref LambdaInvokePolicy
+    Export:
+      Name: !Sub ${App}-${Env}-${Name}-LambdaInvokePolicy

@@ -8,4 +8,8 @@ export const config = {
   LOG_LEVEL: process.env.LOG_LEVEL || "info",
   DATABASE_URL: process.env.DATABASE_URL,
   JWT_SECRET: process.env.JWT_SECRET,
+  // aws configure
+  AWS_REGION: process.env.AWS_REGION || "ap-southeast-2",
+  SMS_LAMBDA_FUNCTION_NAME:
+    process.env.SMS_LAMBDA_FUNCTION_NAME || "tool-sms-sendSmsFunction-qELG61cAgDO7",
 };
