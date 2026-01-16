@@ -2,6 +2,7 @@ import customersRoutes from "./customers.js";
 import deviceRoutes from "./device.js";
 import registrationRoutes from "./registration.js";
 import otpRoutes from "./otp.js";
+import authRoutes from "./auth.js";
 
 export function registerRoutes(fastify) {
   // Register API routes with prefix
@@ -9,6 +10,7 @@ export function registerRoutes(fastify) {
   fastify.register(registrationRoutes, { prefix: "/api/registration" });
   fastify.register(deviceRoutes, { prefix: "/api/device" });
   fastify.register(otpRoutes, { prefix: "/api/otp" });
+  fastify.register(authRoutes, { prefix: "/api/auth" });
 
   fastify.log.info("Routes registered successfully");
 }

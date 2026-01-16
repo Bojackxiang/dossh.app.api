@@ -206,7 +206,7 @@ export const UpdateCustomerBody = Type.Object({
   firstName: Type.Optional(Type.String({ minLength: 1, maxLength: 100 })),
   lastName: Type.Optional(Type.String({ minLength: 1, maxLength: 100 })),
   username: Type.Optional(Type.String({ minLength: 3, maxLength: 50 })),
-  phone: Type.Optional(Type.String({ pattern: "^\\+?[1-9]\\d{1,14}$" })),
+  phone: Type.Optional(Type.String({ pattern: "^\\+?[0-9]\\d{1,14}$" })),
 });
 
 export const InactiveCustomerBody = Type.Object({

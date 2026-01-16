@@ -12,4 +12,5 @@ export const config = {
   AWS_REGION: process.env.AWS_REGION || "ap-southeast-2",
   SMS_LAMBDA_FUNCTION_NAME:
     process.env.SMS_LAMBDA_FUNCTION_NAME || "tool-sms-sendSmsFunction-qELG61cAgDO7",
+  JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
 };
