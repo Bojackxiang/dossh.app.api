@@ -1,8 +1,6 @@
 import "dotenv/config";
 import * as Sentry from "@sentry/node";
 
-console.log("[Sentry] DSN present:", Boolean(process.env.SENTRY_DSN));
-
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
 
